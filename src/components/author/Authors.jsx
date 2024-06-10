@@ -3,6 +3,7 @@ import { Avatar, Divider, Grid, Typography } from "@mui/material";
 
 import { GET_AUTHORS_INFO } from "../../graphql/queries";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Authors() {
   const { loading, data, errors } = useQuery(GET_AUTHORS_INFO);
@@ -11,7 +12,6 @@ function Authors() {
 
   if (errors) return <h2>Error ...</h2>;
 
-  console.log(data);
   const { authors } = data;
   return (
     <Grid
@@ -21,8 +21,8 @@ function Authors() {
       {authors.map((author, index) => (
         <React.Fragment key={author.id}>
           <Grid item xs={12} padding={2}>
-            <a
-              href={`/authors/${author.slug}`}
+            <Link
+              to={`/authors/${author.slug}`}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -33,7 +33,7 @@ function Authors() {
               <Typography component="p" variant="p" color="text.secondary">
                 {author.name}
               </Typography>
-            </a>
+            </Link>
           </Grid>
           {index !== authors.length - 1 && (
             <Grid item xs={12}>
