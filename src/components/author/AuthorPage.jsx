@@ -6,6 +6,7 @@ import { Avatar, Container, Grid, Typography } from "@mui/material";
 
 import { GET_AUTHOR_INFO } from "../../graphql/queries";
 import CardEL from "../shared/CardEL";
+import Loader from "../shared/Loader";
 
 function AuthorPage() {
   const { slug } = useParams();
@@ -14,11 +15,13 @@ function AuthorPage() {
     variables: { slug },
   });
 
-  if (loading) return <h4>Loading...</h4>;
+  if (loading) return <Loader />;
 
   if (errors) return <h4>Errors...</h4>;
 
-  const { author: {name , field, avatar, description, posts} } = data;
+  const {
+    author: { name, field, avatar, description, posts },
+  } = data;
 
   return (
     <Container maxWidth="lg">
@@ -52,7 +55,11 @@ function AuthorPage() {
           <Grid container spacing={2} mt={2}>
             {posts.map((post) => (
               <Grid item sx={12} sm={6} md={4} key={post.id}>
-                <CardEL title={post.title} slug={post.slug} coverPhoto={post.coverPhoto} />
+                <CardEL
+                  title={post.title}
+                  slug={post.slug}
+                  coverPhoto={post.coverPhoto}
+                />
               </Grid>
             ))}
           </Grid>
