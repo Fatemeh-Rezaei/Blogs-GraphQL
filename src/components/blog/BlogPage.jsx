@@ -3,10 +3,11 @@ import { useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { Avatar, Box, Container, Grid, Typography } from "@mui/material";
 import { ArrowBackRounded } from "@mui/icons-material";
+import sanitizeHtml from "sanitize-html";
 
 import { GET_POST_INFO } from "../../graphql/queries";
 import Loader from "../shared/Loader";
-import sanitizeHtml from "sanitize-html";
+import CommentForm from "../comment/CommentForm";
 
 function BlogPage() {
   const { slug } = useParams();
@@ -21,8 +22,6 @@ function BlogPage() {
   if (loading) return <Loader />;
 
   if (errors) return <h4>Errors...</h4>;
-
-  console.log(data);
 
   return (
     <Container maxWidth="lg">
@@ -66,6 +65,9 @@ function BlogPage() {
               __html: sanitizeHtml(data.post.content.html),
             }}
           ></div>
+        </Grid>
+        <Grid item xs={12}>
+          <CommentForm slug={slug} />
         </Grid>
       </Grid>
     </Container>
