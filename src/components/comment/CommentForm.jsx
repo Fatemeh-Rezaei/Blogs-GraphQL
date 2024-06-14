@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { SEND_COMMENT } from "../../graphql/mutations";
 
@@ -10,7 +11,7 @@ function CommentForm({ slug }) {
   const [email, setEmail] = useState("");
   const [text, setText] = useState("");
 
-  const [sendComment, { loading, data, errors }] = useMutation(SEND_COMMENT, {
+  const [sendComment, { loading, data }] = useMutation(SEND_COMMENT, {
     variables: {
       name,
       email,
@@ -29,10 +30,10 @@ function CommentForm({ slug }) {
     }
   };
 
-  if(data) {
+  if (data) {
     toast.success("کامنت با موفقیت ارسال شد و منتظر تایید می باشد", {
-      position: "top-center"
-    })
+      position: "top-center",
+    });
   }
 
   return (
@@ -81,7 +82,9 @@ function CommentForm({ slug }) {
       </Grid>
       <Grid item sx={12} m={2}>
         {loading ? (
-          <Button variant="contained" disabled>در حال ارسال ...</Button>
+          <Button variant="contained" disabled>
+            در حال ارسال ...
+          </Button>
         ) : (
           <Button variant="contained" onClick={sendHandler}>
             ارسال
